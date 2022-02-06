@@ -6,6 +6,8 @@ import io.javalin.Javalin;
 import io.javalin.core.util.RouteOverviewPlugin;
 import io.javalin.http.staticfiles.Location;
 import umm3601.user.UserDatabase;
+import umm3601.user.TodoController;
+import umm3601.user.TodoDatabase;
 import umm3601.user.UserController;
 
 public class Server {
@@ -61,7 +63,7 @@ public class Server {
    * error message exit the program.
    */
 
-     private static UserController buildTodoController() {
+     private static TodoController buildTodoController() {
     TodoController todoController = null;
 
     try {
