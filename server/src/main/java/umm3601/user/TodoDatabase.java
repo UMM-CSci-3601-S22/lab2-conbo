@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-/* import io.javalin.http.BadRequestResponse; */
+import io.javalin.http.BadRequestResponse;
 
 /**
  * A fake "database" of user info
@@ -51,7 +51,17 @@ public class TodoDatabase {
   public Todo[] listTodos(Map<String, List<String>> queryParams) {
     Todo[] filteredTodos = allTodos;
 
+    if (queryParams.containsKey("owner")) {
+      String targetCompany = queryParams.get("owner").get(0);
+      filteredTodos = filterTodosByOwner(filteredTodos, targetCompany);
+    }
+
     return filteredTodos;
+  }
+
+
+  public Todo[] filterTodosByOwner(Todo[] todos, String targetOwner) {
+    return Arrays.stream(todos).filter(x -> x.owner.equals(targetOwner)).toArray(Todo[]::new);
   }
 
 }
