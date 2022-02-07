@@ -6,17 +6,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-
-import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpCode;
 import io.javalin.http.NotFoundResponse;
@@ -40,15 +34,13 @@ public class TestTodos {
   }
 
   @Test
-  public void sizeTodosIsCorrect() throws IOException{
+  public void sizeTodosIsCorrect() throws IOException {
     assertEquals(300, db.size());
   }
 
   @Test
   public void canGetAllTodos() throws IOException {
-
     todoController.getTodos(ctx);
-
     // Confirm that `json` was called with all the todos.
     ArgumentCaptor<Todo[]> argument = ArgumentCaptor.forClass(Todo[].class);
     verify(ctx).json(argument.capture());
