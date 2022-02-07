@@ -52,8 +52,18 @@ public class TodoDatabase {
     Todo[] filteredTodos = allTodos;
 
     if (queryParams.containsKey("owner")) {
-      String targetCompany = queryParams.get("owner").get(0);
-      filteredTodos = filterTodosByOwner(filteredTodos, targetCompany);
+      String targetOwner = queryParams.get("owner").get(0);
+      filteredTodos = filterTodosByOwner(filteredTodos, targetOwner);
+    }
+
+    if (queryParams.containsKey("limit")) {
+      String limitParam = queryParams.get("limit").get(0);
+      try {
+        int targetLimit = Integer.parseInt(limitParam);
+        filteredTodos = limitTodos(filteredTodos, targetLimit);
+      } catch (NumberFormatException e) {
+        throw new BadRequestResponse("Specified limit '" + limitParam + "' can't be parsed to an integer");
+      }
     }
 
     return filteredTodos;
@@ -62,6 +72,10 @@ public class TodoDatabase {
 
   public Todo[] filterTodosByOwner(Todo[] todos, String targetOwner) {
     return Arrays.stream(todos).filter(x -> x.owner.equals(targetOwner)).toArray(Todo[]::new);
+  }
+
+  public Todo[] limitTodos(Todo[] todos, int limit) {
+    return Arrays.stream(todos).limit(limit).toArray(Todo[]::new);
   }
 
 }
