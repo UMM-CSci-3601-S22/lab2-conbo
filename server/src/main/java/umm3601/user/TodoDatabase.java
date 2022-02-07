@@ -83,8 +83,7 @@ public class TodoDatabase {
     return Arrays.stream(todos).limit(limit).toArray(Todo[]::new);
   }
 
-  public Todo[] filterTodosByBody(Todo[] todos, String contains){
-
+  public Todo[] filterTodosByBody(Todo[] todos, String contains) {
     return Arrays.stream(todos).filter(x -> x.body.toLowerCase().contains(contains.toLowerCase())).toArray(Todo[]::new);
   }
 
