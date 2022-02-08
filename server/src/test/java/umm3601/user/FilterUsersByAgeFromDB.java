@@ -49,4 +49,5 @@ public class FilterUsersByAgeFromDB {
     User[] age33Users = db.listUsers(queryParams);
     assertEquals(1, age33Users.length, "Incorrect number of users with age 33");
   }
+
 }
