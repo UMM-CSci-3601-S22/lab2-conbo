@@ -83,6 +83,12 @@ public class TodoDatabase {
     return Arrays.stream(todos).limit(limit).toArray(Todo[]::new);
   }
 
+  public Todo[] filterTodosByStatus(Todo[] todos, String complete) {
+    if (complete.equals("complete")){
+      return Arrays.stream(todos).filter(x -> x.status == true).toArray(Todo[]::new);
+    } else {return null;}
+  }
+
   public Todo[] filterTodosByBody(Todo[] todos, String contains) {
     return Arrays.stream(todos).filter(x -> x.body.toLowerCase().contains(contains.toLowerCase())).toArray(Todo[]::new);
   }

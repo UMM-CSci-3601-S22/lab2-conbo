@@ -24,6 +24,15 @@ public class FilterTodos {
     }
 
     @Test
+    public void filterTodosByStatus() throws IOException {
+      TodoDatabase db = new TodoDatabase("/todos.json");
+      Todo[] allTodos = db.listTodos(new HashMap<>());
+
+      Todo[] completeStatus = db.filterTodosByStatus(allTodos, "complete");
+      assertEquals(143, completeStatus.length, "Incorrect number of todos with completed status");
+    }
+
+    @Test
     public void filterTodosByOwner() throws IOException {
       TodoDatabase db = new TodoDatabase("/todos.json");
       Todo[] allTodos = db.listTodos(new HashMap<>());
