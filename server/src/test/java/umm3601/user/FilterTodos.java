@@ -24,6 +24,15 @@ public class FilterTodos {
     }
 
     @Test
+    public void filterTodosByStatus() throws IOException {
+      TodoDatabase db = new TodoDatabase("/todos.json");
+      Todo[] allTodos = db.listTodos(new HashMap<>());
+
+      Todo[] completeStatus = db.filterTodosByStatus(allTodos, "complete");
+      assertEquals(143, completeStatus.length, "Incorrect number of todos with completed status");
+    }
+
+    @Test
     public void filterTodosByOwner() throws IOException {
       TodoDatabase db = new TodoDatabase("/todos.json");
       Todo[] allTodos = db.listTodos(new HashMap<>());
@@ -59,5 +68,16 @@ public class FilterTodos {
       queryParams.put("contains", Arrays.asList(new String[] {"Veniam"}));
       Todo[] ownedByFry = db.listTodos(queryParams);
       assertEquals(78, ownedByFry.length);
+    }
+
+    @Test
+    public void filterCompletion() throws IOException {
+      TodoDatabase db = new TodoDatabase("/todos.json");
+      Map<String, List<String>> queryParams = new HashMap<>();
+
+
+      queryParams.put("status", Arrays.asList(new String[] {"complete"}));
+      Todo[] completed = db.listTodos(queryParams);
+      assertEquals(143, completed.length);
     }
 }
