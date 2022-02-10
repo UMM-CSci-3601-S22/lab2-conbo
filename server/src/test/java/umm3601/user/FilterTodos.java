@@ -69,4 +69,15 @@ public class FilterTodos {
       Todo[] ownedByFry = db.listTodos(queryParams);
       assertEquals(78, ownedByFry.length);
     }
+
+    @Test
+    public void filterCompletion() throws IOException {
+      TodoDatabase db = new TodoDatabase("/todos.json");
+      Map<String, List<String>> queryParams = new HashMap<>();
+
+
+      queryParams.put("status", Arrays.asList(new String[] {"complete"}));
+      Todo[] completed = db.listTodos(queryParams);
+      assertEquals(143, completed.length);
+    }
 }

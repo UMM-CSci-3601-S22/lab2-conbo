@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -67,4 +68,19 @@ public class TestTodos {
       todoController.getTodo(ctx);
     });
   }
+
+  @Test
+  public void canFilterStatus() throws IOException {
+    Todo[] listOfTodos = db.listTodos(new HashMap<>());
+    Todo[] completed = db.filterTodosByStatus(listOfTodos, "complete");
+    assertEquals(143, completed.length);
+
+    Todo[] incomplete = db.filterTodosByStatus(listOfTodos, "incomplete");
+    assertEquals(157, incomplete.length);
+
+    Todo[] unknownString = db.filterTodosByStatus(listOfTodos, "asdfag");
+    assertEquals(null, unknownString);
+
+  }
+
 }
