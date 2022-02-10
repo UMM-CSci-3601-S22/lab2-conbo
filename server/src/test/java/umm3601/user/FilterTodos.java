@@ -33,6 +33,15 @@ public class FilterTodos {
     }
 
     @Test
+    public void filterTodosByCategory() throws IOException {
+      TodoDatabase db = new TodoDatabase("/todos.json");
+      Todo[] allTodos = db.listTodos(new HashMap<>());
+
+      Todo[] groceries = db.filterTodosByCategory(allTodos, "groceries");
+      assertEquals(76, groceries.length, "Incorrect number of todos with groceries Category");
+    }
+
+    @Test
     public void filterTodosByOwner() throws IOException {
       TodoDatabase db = new TodoDatabase("/todos.json");
       Todo[] allTodos = db.listTodos(new HashMap<>());
@@ -69,6 +78,18 @@ public class FilterTodos {
       Todo[] ownedByFry = db.listTodos(queryParams);
       assertEquals(78, ownedByFry.length);
     }
+
+    @Test
+    public void filterCategory() throws IOException {
+      TodoDatabase db = new TodoDatabase("/todos.json");
+      Map<String, List<String>> queryParams = new HashMap<>();
+
+      queryParams.put("category", Arrays.asList(new String[] {"homework"}));
+      Todo[] homeworkCategory = db.listTodos(queryParams);
+      assertEquals(79, homeworkCategory.length);
+    }
+
+
 
     @Test
     public void filterCompletion() throws IOException {
