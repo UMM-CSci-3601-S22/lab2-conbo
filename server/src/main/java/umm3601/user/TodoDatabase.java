@@ -77,13 +77,12 @@ public class TodoDatabase {
     }
 
     if (queryParams.containsKey("category")) {
-      String groceries  = queryParams.get("category").get(0);
-      filteredTodos = filterTodosByCategory(filteredTodos, groceries );
+      String groceries = queryParams.get("category").get(0);
+      filteredTodos = filterTodosByCategory(filteredTodos, groceries);
     }
 
     return filteredTodos;
   }
-
 
   public Todo[] filterTodosByOwner(Todo[] todos, String targetOwner) {
     return Arrays.stream(todos).filter(x -> x.owner.equals(targetOwner)).toArray(Todo[]::new);
@@ -94,9 +93,11 @@ public class TodoDatabase {
   }
 
   public Todo[] filterTodosByStatus(Todo[] todos, String status) {
-    if (status.equals("complete")){
+    if (status.equals("complete")) {
       return Arrays.stream(todos).filter(x -> x.status == true).toArray(Todo[]::new);
-    } else {return null;}
+    } else {
+      return null;
+    }
   }
 
   public Todo[] filterTodosByBody(Todo[] todos, String contains) {
@@ -104,8 +105,8 @@ public class TodoDatabase {
   }
 
   public Todo[] filterTodosByCategory(Todo[] todos, String category) {
-    return Arrays.stream(todos).filter(x -> x.category.toLowerCase().equals(category.toLowerCase())).toArray(Todo[]::new);
+    return Arrays.stream(todos).filter(x -> x.category.toLowerCase().equals(category.toLowerCase()))
+        .toArray(Todo[]::new);
   }
-
 
 }
