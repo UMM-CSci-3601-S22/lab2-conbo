@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -67,4 +68,14 @@ public class TestTodos {
       todoController.getTodo(ctx);
     });
   }
+
+
+  @Test
+  public void CanFilterByCategory() throws IOException {
+    Todo[] allTodos = db.listTodos(new HashMap<>());
+    Todo[] filteredTodos = db.filterTodosByCategory(allTodos, "homework");
+    assertEquals(79, filteredTodos.length);
+  }
+
+
 }

@@ -79,5 +79,15 @@ public class FilterTodos {
       assertEquals(78, ownedByFry.length);
     }
 
+    @Test
+    public void filterCategory() throws IOException {
+      TodoDatabase db = new TodoDatabase("/todos.json");
+      Map<String, List<String>> queryParams = new HashMap<>();
+
+      queryParams.put("category", Arrays.asList(new String[] {"homework"}));
+      Todo[] homeworkCategory = db.listTodos(queryParams);
+      assertEquals(79, homeworkCategory.length);
+    }
+
 
 }
