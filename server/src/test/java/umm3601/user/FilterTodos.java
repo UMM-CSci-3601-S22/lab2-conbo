@@ -17,8 +17,13 @@ public class FilterTodos {
     TodoDatabase db = new TodoDatabase("/todos.json");
     Todo[] allTodos = db.listTodos(new HashMap<>());
 
-    Todo[] ownedByFry = db.limitTodos(allTodos, 3);
-    assertEquals(3, ownedByFry.length, "Incorrect number of todos with owner Fry");
+    Todo[] limitOfThree = db.limitTodos(allTodos, 3);
+    assertEquals(3, limitOfThree.length, "Incorrect number of todos with owner Fry");
+
+    Map<String, List<String>> queryParams = new HashMap<>();
+    queryParams.put("limit", Arrays.asList(new String[] { "4" }));
+    Todo[] limitOfFour = db.listTodos(queryParams);
+    assertEquals(4, limitOfFour.length);
 
   }
 
@@ -29,6 +34,9 @@ public class FilterTodos {
 
     Todo[] completeStatus = db.filterTodosByStatus(allTodos, "complete");
     assertEquals(143, completeStatus.length, "Incorrect number of todos with completed status");
+
+    Todo[] incompleteStatus = db.filterTodosByStatus(allTodos, "incomplete");
+    assertEquals(157, incompleteStatus.length, "Incorrect number of todos with completed status");
   }
 
   @Test
