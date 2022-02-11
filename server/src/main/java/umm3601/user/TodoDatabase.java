@@ -53,7 +53,6 @@ public class TodoDatabase {
   public Todo[] listTodos(Map<String, List<String>> queryParams) {
     Todo[] filteredTodos = allTodos;
 
-
     if (queryParams.containsKey("owner")) {
       String targetOwner = queryParams.get("owner").get(0);
       filteredTodos = filterTodosByOwner(filteredTodos, targetOwner);
@@ -80,18 +79,17 @@ public class TodoDatabase {
     }
 
     if (queryParams.containsKey("category")) {
-      String groceries  = queryParams.get("category").get(0);
-      filteredTodos = filterTodosByCategory(filteredTodos, groceries );
+      String groceries = queryParams.get("category").get(0);
+      filteredTodos = filterTodosByCategory(filteredTodos, groceries);
     }
 
     if (queryParams.containsKey("orderBy")) {
-      String attribute  = queryParams.get("orderBy").get(0);
+      String attribute = queryParams.get("orderBy").get(0);
       filteredTodos = filterByAttribute(filteredTodos, attribute);
     }
 
     return filteredTodos;
   }
-
 
   public Todo[] filterTodosByOwner(Todo[] todos, String targetOwner) {
     return Arrays.stream(todos).filter(x -> x.owner.equals(targetOwner)).toArray(Todo[]::new);
@@ -102,9 +100,9 @@ public class TodoDatabase {
   }
 
   public Todo[] filterTodosByStatus(Todo[] todos, String completionParam) {
-    if (completionParam.equals("complete")){
+    if (completionParam.equals("complete")) {
       return Arrays.stream(todos).filter(x -> x.status == true).toArray(Todo[]::new);
-    } else if (completionParam.equals("incomplete")){
+    } else if (completionParam.equals("incomplete")) {
       return Arrays.stream(todos).filter(x -> x.status == false).toArray(Todo[]::new);
     } else {
       return null;
@@ -116,17 +114,17 @@ public class TodoDatabase {
   }
 
   public Todo[] filterTodosByCategory(Todo[] todos, String category) {
-    return Arrays.stream(todos).filter(x -> x.category.toLowerCase().equals(category.toLowerCase())).toArray(Todo[]::new);
+    return Arrays.stream(todos).filter(x -> x.category.toLowerCase().equals(category.toLowerCase()))
+        .toArray(Todo[]::new);
   }
 
-  public Todo[] filterByAttribute(Todo[] todos, String attribute){
+  public Todo[] filterByAttribute(Todo[] todos, String attribute) {
 
-
-    if(attribute.equals("owner")) {
-      for (int i = 1; i < todos.length; i++){
+    if (attribute.equals("owner")) {
+      for (int i = 1; i < todos.length; i++) {
         Todo curr = todos[i];
         int j = i - 1;
-        while(j >= 0 && todos[j].owner.compareTo(curr.owner) >= 0) {
+        while (j >= 0 && todos[j].owner.compareTo(curr.owner) >= 0) {
           todos[j + 1] = todos[j];
           j = j - 1;
         }
@@ -134,11 +132,11 @@ public class TodoDatabase {
       }
     }
 
-    if(attribute.equals("category")) {
-      for (int i = 1; i < todos.length; i++){
+    if (attribute.equals("category")) {
+      for (int i = 1; i < todos.length; i++) {
         Todo curr = todos[i];
         int j = i - 1;
-        while(j >= 0 && todos[j].category.compareTo(curr.category) >= 0) {
+        while (j >= 0 && todos[j].category.compareTo(curr.category) >= 0) {
           todos[j + 1] = todos[j];
           j = j - 1;
         }
@@ -146,11 +144,11 @@ public class TodoDatabase {
       }
     }
 
-    if(attribute.equals("body")) {
-      for (int i = 1; i < todos.length; i++){
+    if (attribute.equals("body")) {
+      for (int i = 1; i < todos.length; i++) {
         Todo curr = todos[i];
         int j = i - 1;
-        while(j >= 0 && todos[j].body.compareTo(curr.body) >= 0) {
+        while (j >= 0 && todos[j].body.compareTo(curr.body) >= 0) {
           todos[j + 1] = todos[j];
           j = j - 1;
         }
@@ -158,11 +156,11 @@ public class TodoDatabase {
       }
     }
 
-    if(attribute.equals("status")) {
-      for (int i = 1; i < todos.length; i++){
+    if (attribute.equals("status")) {
+      for (int i = 1; i < todos.length; i++) {
         Todo curr = todos[i];
         int j = i - 1;
-        while(j >= 0 && todos[j].status == true) {
+        while (j >= 0 && todos[j].status == true) {
           todos[j + 1] = todos[j];
           j = j - 1;
         }
