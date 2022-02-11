@@ -20,7 +20,7 @@ import io.javalin.http.BadRequestResponse;
  * "query" the "database".
  */
 
-@SuppressWarnings({"SimplifyBooleanExpression"})
+@SuppressWarnings({ "SimplifyBooleanExpression" })
 public class TodoDatabase {
 
   private Todo[] allTodos;
