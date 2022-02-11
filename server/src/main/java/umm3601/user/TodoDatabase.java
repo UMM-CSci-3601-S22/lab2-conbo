@@ -112,5 +112,4 @@ public class TodoDatabase {
     return Arrays.stream(todos).filter(x -> x.category.toLowerCase().equals(category.toLowerCase()))
         .toArray(Todo[]::new);
   }
-
 }
