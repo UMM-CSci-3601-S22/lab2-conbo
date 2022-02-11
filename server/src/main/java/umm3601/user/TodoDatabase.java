@@ -92,9 +92,11 @@ public class TodoDatabase {
     return Arrays.stream(todos).limit(limit).toArray(Todo[]::new);
   }
 
-  public Todo[] filterTodosByStatus(Todo[] todos, String status) {
-    if (status.equals("complete")) {
-      return Arrays.stream(todos).filter(x -> x.status == true).toArray(Todo[]::new);
+  public Todo[] filterTodosByStatus(Todo[] todos, String completionParam) {
+    if (completionParam.equals("complete")){
+      return Arrays.stream(todos).filter(x -> x.status).toArray(Todo[]::new);
+    } else if (completionParam.equals("incomplete")){
+      return Arrays.stream(todos).filter(x -> !x.status).toArray(Todo[]::new);
     } else {
       return null;
     }
