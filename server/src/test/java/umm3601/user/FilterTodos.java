@@ -16,7 +16,6 @@ public class FilterTodos {
   public void limitTodos() throws IOException {
     TodoDatabase db = new TodoDatabase("/todos.json");
     Todo[] allTodos = db.listTodos(new HashMap<>());
-
     Todo[] limitOfThree = db.limitTodos(allTodos, 3);
     assertEquals(3, limitOfThree.length, "Incorrect number of todos with owner Fry");
 
