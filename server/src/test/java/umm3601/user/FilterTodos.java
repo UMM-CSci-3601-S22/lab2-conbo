@@ -101,4 +101,16 @@ public class FilterTodos {
       Todo[] completed = db.listTodos(queryParams);
       assertEquals(143, completed.length);
     }
+
+    @Test
+    public void orderByAttribute() throws IOException {
+      TodoDatabase db = new TodoDatabase("/todos.json");
+      Map<String, List<String>> queryParams = new HashMap<>();
+
+/* Just checks that it actually returns everything like it is suppose to*/
+      queryParams.put("orderBy", Arrays.asList(new String[] {"owner"}));
+      Todo[] completed = db.listTodos(queryParams);
+      assertEquals(300, completed.length);
+    }
+
 }

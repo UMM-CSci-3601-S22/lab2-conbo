@@ -92,5 +92,12 @@ public class TestTodos {
     assertEquals(79, filteredTodos.length);
   }
 
+  @Test
+  public void canOrderByAttribute() throws IOException {
+    Todo[] allTodos = db.listTodos(new HashMap<>());
+    Todo[] filteredTodos = db.filterByAttribute(allTodos, "owner");
 
+    /* Just checks that it actually returns everything like it is suppose to*/
+    assertEquals(300, filteredTodos.length);
+  }
 }

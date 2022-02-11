@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.lang.model.SourceVersion;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.http.BadRequestResponse;
 
@@ -82,6 +84,11 @@ public class TodoDatabase {
       filteredTodos = filterTodosByCategory(filteredTodos, groceries );
     }
 
+    if (queryParams.containsKey("orderBy")) {
+      String attribute  = queryParams.get("orderBy").get(0);
+      filteredTodos = filterByAttribute(filteredTodos, attribute);
+    }
+
     return filteredTodos;
   }
 
@@ -112,5 +119,57 @@ public class TodoDatabase {
     return Arrays.stream(todos).filter(x -> x.category.toLowerCase().equals(category.toLowerCase())).toArray(Todo[]::new);
   }
 
+  public Todo[] filterByAttribute(Todo[] todos, String attribute){
+
+
+    if(attribute.equals("owner")) {
+      for (int i = 1; i < todos.length; i++){
+        Todo curr = todos[i];
+        int j = i - 1;
+        while(j >= 0 && todos[j].owner.compareTo(curr.owner) >= 0) {
+          todos[j + 1] = todos[j];
+          j = j - 1;
+        }
+        todos[j + 1] = curr;
+      }
+    }
+
+    if(attribute.equals("category")) {
+      for (int i = 1; i < todos.length; i++){
+        Todo curr = todos[i];
+        int j = i - 1;
+        while(j >= 0 && todos[j].category.compareTo(curr.category) >= 0) {
+          todos[j + 1] = todos[j];
+          j = j - 1;
+        }
+        todos[j + 1] = curr;
+      }
+    }
+
+    if(attribute.equals("body")) {
+      for (int i = 1; i < todos.length; i++){
+        Todo curr = todos[i];
+        int j = i - 1;
+        while(j >= 0 && todos[j].body.compareTo(curr.body) >= 0) {
+          todos[j + 1] = todos[j];
+          j = j - 1;
+        }
+        todos[j + 1] = curr;
+      }
+    }
+
+    if(attribute.equals("status")) {
+      for (int i = 1; i < todos.length; i++){
+        Todo curr = todos[i];
+        int j = i - 1;
+        while(j >= 0 && todos[j].status == true) {
+          todos[j + 1] = todos[j];
+          j = j - 1;
+        }
+        todos[j + 1] = curr;
+      }
+    }
+    return todos;
+  }
 
 }
