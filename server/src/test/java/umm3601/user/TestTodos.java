@@ -83,8 +83,6 @@ public class TestTodos {
 
   }
 
-
-
   @Test
   public void canFilterByCategory() throws IOException {
     Todo[] allTodos = db.listTodos(new HashMap<>());
@@ -95,9 +93,15 @@ public class TestTodos {
   @Test
   public void canOrderByAttribute() throws IOException {
     Todo[] allTodos = db.listTodos(new HashMap<>());
-    Todo[] filteredTodos = db.filterByAttribute(allTodos, "owner");
+    Todo[] filteredTodosByOwner = db.filterByAttribute(allTodos, "owner");
+    Todo[] filteredTodosByCategory = db.filterByAttribute(allTodos, "category");
+    Todo[] filteredTodosByBody = db.filterByAttribute(allTodos, "body");
+    Todo[] filteredTodosByStatus = db.filterByAttribute(allTodos, "status");
 
-    /* Just checks that it actually returns everything like it is suppose to*/
-    assertEquals(300, filteredTodos.length);
+    /* Just checks that it actually returns everything like it is suppose to */
+    assertEquals(300, filteredTodosByOwner.length);
+    assertEquals(300, filteredTodosByCategory.length);
+    assertEquals(300, filteredTodosByBody.length);
+    assertEquals(300, filteredTodosByStatus.length);
   }
 }
