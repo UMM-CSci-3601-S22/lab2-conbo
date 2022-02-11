@@ -87,5 +87,4 @@ public class FilterTodos {
     Todo[] homeworkCategory = db.listTodos(queryParams);
     assertEquals(79, homeworkCategory.length);
   }
-
 }
