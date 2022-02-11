@@ -69,13 +69,11 @@ public class TestTodos {
     });
   }
 
-
   @Test
-  public void CanFilterByCategory() throws IOException {
+  public void canFilterByCategory() throws IOException {
     Todo[] allTodos = db.listTodos(new HashMap<>());
     Todo[] filteredTodos = db.filterTodosByCategory(allTodos, "homework");
     assertEquals(79, filteredTodos.length);
   }
-
 
 }
