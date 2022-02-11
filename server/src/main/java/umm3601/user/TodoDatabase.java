@@ -17,6 +17,8 @@ import io.javalin.http.BadRequestResponse;
  * then provide various database-like methods that allow the `UserController` to
  * "query" the "database".
  */
+
+ @SuppressWarnings({"SimplifyBooleanExpression"})
 public class TodoDatabase {
 
   private Todo[] allTodos;
