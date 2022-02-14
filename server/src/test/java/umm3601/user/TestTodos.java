@@ -85,7 +85,6 @@ public class TestTodos {
 
   @Test
   public void limitTodos() throws IOException {
-    TodoDatabase db = new TodoDatabase("/todos.json");
     Todo[] allTodos = db.listTodos(new HashMap<>());
 
     Todo[] ownedByFry = db.limitTodos(allTodos, 3);
@@ -102,7 +101,6 @@ public class TestTodos {
 
   @Test
   public void filterTodosByStatus() throws IOException {
-    TodoDatabase db = new TodoDatabase("/todos.json");
     Todo[] allTodos = db.listTodos(new HashMap<>());
 
     Todo[] completeStatus = db.filterTodosByStatus(allTodos, "complete");
@@ -127,7 +125,6 @@ public class TestTodos {
 
   @Test
   public void testSize() throws IOException {
-    TodoDatabase db = new TodoDatabase("/todos.json");
     assertEquals(300, db.size(), "Incorrect total Todos");
   }
 }
