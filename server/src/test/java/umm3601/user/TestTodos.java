@@ -84,11 +84,31 @@ public class TestTodos {
   }
 
   @Test
+  public void limitTodos() throws IOException {
+    TodoDatabase db = new TodoDatabase("/todos.json");
+    Todo[] allTodos = db.listTodos(new HashMap<>());
+
+    Todo[] ownedByFry = db.limitTodos(allTodos, 3);
+    assertEquals(3, ownedByFry.length, "Incorrect number of todos with owner Fry");
+
+    }
+
+  @Test
   public void canFilterByCategory() throws IOException {
     Todo[] allTodos = db.listTodos(new HashMap<>());
     Todo[] filteredTodos = db.filterTodosByCategory(allTodos, "homework");
     assertEquals(79, filteredTodos.length);
   }
+
+  @Test
+  public void filterTodosByStatus() throws IOException {
+    TodoDatabase db = new TodoDatabase("/todos.json");
+    Todo[] allTodos = db.listTodos(new HashMap<>());
+
+    Todo[] completeStatus = db.filterTodosByStatus(allTodos, "complete");
+    assertEquals(143, completeStatus.length, "Incorrect number of todos with completed status");
+  }
+
 
   @Test
   public void canOrderByAttribute() throws IOException {
@@ -103,5 +123,11 @@ public class TestTodos {
     assertEquals(300, filteredTodosByCategory.length);
     assertEquals(300, filteredTodosByBody.length);
     assertEquals(300, filteredTodosByStatus.length);
+  }
+
+  @Test
+  public void testSize() throws IOException {
+    TodoDatabase db = new TodoDatabase("/todos.json");
+    assertEquals(300, db.size(), "Incorrect total Todos");
   }
 }

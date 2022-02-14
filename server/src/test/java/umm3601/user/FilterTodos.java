@@ -16,20 +16,12 @@ public class FilterTodos {
     @Test
   public void limitTodos() throws IOException {
     TodoDatabase db = new TodoDatabase("/todos.json");
-    Todo[] allTodos = db.listTodos(new HashMap<>());
+    Map<String, List<String>> queryParams = new HashMap<>();
 
-    Todo[] ownedByFry = db.limitTodos(allTodos, 3);
-    assertEquals(3, ownedByFry.length, "Incorrect number of todos with owner Fry");
+    queryParams.put("limit", Arrays.asList(new String[] {"3"}));
+    Todo[] limitOfThree = db.listTodos(queryParams);
+    assertEquals(3, limitOfThree.length, "Incorrect number of todos with limit of 3");
 
-    }
-
-    @Test
-    public void filterTodosByStatus() throws IOException {
-      TodoDatabase db = new TodoDatabase("/todos.json");
-      Todo[] allTodos = db.listTodos(new HashMap<>());
-
-      Todo[] completeStatus = db.filterTodosByStatus(allTodos, "complete");
-      assertEquals(143, completeStatus.length, "Incorrect number of todos with completed status");
     }
 
     @Test
@@ -53,11 +45,6 @@ public class FilterTodos {
       assertEquals(49, ownedByWorkman.length, "Incorrect number of todos with owner Workman");
     }
 
-    @Test
-    public void testSize() throws IOException {
-      TodoDatabase db = new TodoDatabase("/todos.json");
-      assertEquals(300, db.size(), "Incorrect total Todos");
-    }
 
     @Test
     public void listTodosWithOwnerFilter() throws IOException {
