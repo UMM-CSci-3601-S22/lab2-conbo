@@ -69,6 +69,7 @@ public class TestTodos {
     });
   }
 
+
   @Test
   public void canFilterStatus() throws IOException {
     Todo[] listOfTodos = db.listTodos(new HashMap<>());
