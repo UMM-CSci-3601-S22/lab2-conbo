@@ -70,7 +70,7 @@ public class FilterTodos {
     TodoDatabase db = new TodoDatabase("/todos.json");
     Map<String, List<String>> queryParams = new HashMap<>();
 
-    queryParams.put("owner", Arrays.asList(new String[] { "Fry" }));
+    queryParams.put("owner", Arrays.asList(new String[] {"Fry"}));
     Todo[] ownedByFry = db.listTodos(queryParams);
     assertEquals(61, ownedByFry.length, "Incorrect number of users with age 25");
   }
@@ -80,7 +80,7 @@ public class FilterTodos {
     TodoDatabase db = new TodoDatabase("/todos.json");
     Map<String, List<String>> queryParams = new HashMap<>();
 
-    queryParams.put("contains", Arrays.asList(new String[] { "Veniam" }));
+    queryParams.put("contains", Arrays.asList(new String[] {"Veniam"}));
     Todo[] ownedByFry = db.listTodos(queryParams);
     assertEquals(78, ownedByFry.length);
   }
@@ -90,7 +90,7 @@ public class FilterTodos {
     TodoDatabase db = new TodoDatabase("/todos.json");
     Map<String, List<String>> queryParams = new HashMap<>();
 
-    queryParams.put("category", Arrays.asList(new String[] { "homework" }));
+    queryParams.put("category", Arrays.asList(new String[] {"homework"}));
     Todo[] homeworkCategory = db.listTodos(queryParams);
     assertEquals(79, homeworkCategory.length);
   }
