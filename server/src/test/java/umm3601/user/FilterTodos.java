@@ -83,7 +83,7 @@ public class FilterTodos {
     Map<String, List<String>> queryParams = new HashMap<>();
 
 
-
+  }
     @Test
     public void filterCompletion() throws IOException {
       TodoDatabase db = new TodoDatabase("/todos.json");
