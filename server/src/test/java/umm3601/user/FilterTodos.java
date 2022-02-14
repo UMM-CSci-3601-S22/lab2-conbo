@@ -20,7 +20,7 @@ public class FilterTodos {
     assertEquals(3, limitOfThree.length, "Incorrect number of todos with owner Fry");
 
     Map<String, List<String>> queryParams = new HashMap<>();
-    queryParams.put("limit", Arrays.asList(new String[] { "4" }));
+    queryParams.put("limit", Arrays.asList(new String[] {"4"}));
     Todo[] limitOfFour = db.listTodos(queryParams);
     assertEquals(4, limitOfFour.length);
 
