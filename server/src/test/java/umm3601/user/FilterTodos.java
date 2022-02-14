@@ -34,15 +34,6 @@ public class FilterTodos {
   }
 
   @Test
-  public void filterTodosByCategory() throws IOException {
-    TodoDatabase db = new TodoDatabase("/todos.json");
-    Todo[] allTodos = db.listTodos(new HashMap<>());
-
-    Todo[] groceries = db.filterTodosByCategory(allTodos, "groceries");
-    assertEquals(76, groceries.length, "Incorrect number of todos with groceries Category");
-  }
-
-  @Test
   public void filterTodosByOwner() throws IOException {
     TodoDatabase db = new TodoDatabase("/todos.json");
     Todo[] allTodos = db.listTodos(new HashMap<>());
