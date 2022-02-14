@@ -17,6 +17,8 @@ import io.javalin.http.BadRequestResponse;
  * then provide various database-like methods that allow the `UserController` to
  * "query" the "database".
  */
+
+@SuppressWarnings({ "SimplifyBooleanExpression" })
 public class TodoDatabase {
 
   private Todo[] allTodos;
@@ -71,9 +73,18 @@ public class TodoDatabase {
       }
     }
 
+    if (queryParams.containsKey("status")) {
+      String complete = queryParams.get("status").get(0);
+      filteredTodos = filterTodosByStatus(filteredTodos, complete);
+    }
+
+    if (queryParams.containsKey("category")) {
+      String groceries = queryParams.get("category").get(0);
+      filteredTodos = filterTodosByCategory(filteredTodos, groceries);
+    }
+
     return filteredTodos;
   }
-
 
   public Todo[] filterTodosByOwner(Todo[] todos, String targetOwner) {
     return Arrays.stream(todos).filter(x -> x.owner.equals(targetOwner)).toArray(Todo[]::new);
@@ -83,9 +94,22 @@ public class TodoDatabase {
     return Arrays.stream(todos).limit(limit).toArray(Todo[]::new);
   }
 
+  public Todo[] filterTodosByStatus(Todo[] todos, String completionParam) {
+    if (completionParam.equals("complete")) {
+      return Arrays.stream(todos).filter(x -> x.status).toArray(Todo[]::new);
+    } else if (completionParam.equals("incomplete")) {
+      return Arrays.stream(todos).filter(x -> !x.status).toArray(Todo[]::new);
+    } else {
+      return null;
+    }
+  }
+
   public Todo[] filterTodosByBody(Todo[] todos, String contains) {
     return Arrays.stream(todos).filter(x -> x.body.toLowerCase().contains(contains.toLowerCase())).toArray(Todo[]::new);
   }
 
-
+  public Todo[] filterTodosByCategory(Todo[] todos, String category) {
+    return Arrays.stream(todos).filter(x -> x.category.toLowerCase().equals(category.toLowerCase()))
+        .toArray(Todo[]::new);
+  }
 }
