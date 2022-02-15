@@ -69,6 +69,30 @@ public class TestTodos {
     });
   }
 
+
+  @Test
+  public void canFilterStatus() throws IOException {
+    Todo[] listOfTodos = db.listTodos(new HashMap<>());
+    Todo[] completed = db.filterTodosByStatus(listOfTodos, "complete");
+    assertEquals(143, completed.length);
+
+    Todo[] incomplete = db.filterTodosByStatus(listOfTodos, "incomplete");
+    assertEquals(157, incomplete.length);
+
+    Todo[] unknownString = db.filterTodosByStatus(listOfTodos, "asdfag");
+    assertEquals(null, unknownString);
+
+  }
+
+  @Test
+  public void limitTodos() throws IOException {
+    Todo[] allTodos = db.listTodos(new HashMap<>());
+
+    Todo[] ownedByFry = db.limitTodos(allTodos, 3);
+    assertEquals(3, ownedByFry.length, "Incorrect number of todos with owner Fry");
+
+    }
+
   @Test
   public void canFilterByCategory() throws IOException {
     Todo[] allTodos = db.listTodos(new HashMap<>());
@@ -76,6 +100,32 @@ public class TestTodos {
     assertEquals(79, filteredTodos.length);
   }
 
+  @Test
+  public void filterTodosByStatus() throws IOException {
+    Todo[] allTodos = db.listTodos(new HashMap<>());
+
+    Todo[] completeStatus = db.filterTodosByStatus(allTodos, "complete");
+    assertEquals(143, completeStatus.length, "Incorrect number of todos with completed status");
+  }
 
 
+  @Test
+  public void canOrderByAttribute() throws IOException {
+    Todo[] allTodos = db.listTodos(new HashMap<>());
+    Todo[] filteredTodosByOwner = db.filterByAttribute(allTodos, "owner");
+    Todo[] filteredTodosByCategory = db.filterByAttribute(allTodos, "category");
+    Todo[] filteredTodosByBody = db.filterByAttribute(allTodos, "body");
+    Todo[] filteredTodosByStatus = db.filterByAttribute(allTodos, "status");
+
+    /* Just checks that it actually returns everything like it is suppose to */
+    assertEquals(300, filteredTodosByOwner.length);
+    assertEquals(300, filteredTodosByCategory.length);
+    assertEquals(300, filteredTodosByBody.length);
+    assertEquals(300, filteredTodosByStatus.length);
+  }
+
+  @Test
+  public void testSize() throws IOException {
+    assertEquals(300, db.size(), "Incorrect total Todos");
+  }
 }

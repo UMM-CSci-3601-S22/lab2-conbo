@@ -15,45 +15,28 @@ public class FilterTodos {
   @Test
   public void limitTodos() throws IOException {
     TodoDatabase db = new TodoDatabase("/todos.json");
-    Todo[] allTodos = db.listTodos(new HashMap<>());
-    Todo[] limitOfThree = db.limitTodos(allTodos, 3);
-    assertEquals(3, limitOfThree.length, "Incorrect number of todos with owner Fry");
 
     Map<String, List<String>> queryParams = new HashMap<>();
-    queryParams.put("limit", Arrays.asList(new String[] {"4"}));
-    Todo[] limitOfFour = db.listTodos(queryParams);
-    assertEquals(4, limitOfFour.length);
 
-  }
+    queryParams.put("limit", Arrays.asList(new String[] {"3"}));
+    Todo[] limitOfThree = db.listTodos(queryParams);
+    assertEquals(3, limitOfThree.length, "Incorrect number of todos with limit of 3");
 
-  @Test
-  public void filterTodosByStatus() throws IOException {
-    TodoDatabase db = new TodoDatabase("/todos.json");
-    Todo[] allTodos = db.listTodos(new HashMap<>());
+    }
 
-    Todo[] completeStatus = db.filterTodosByStatus(allTodos, "complete");
-    assertEquals(143, completeStatus.length, "Incorrect number of todos with completed status");
+    @Test
+    public void filterTodosByCategory() throws IOException {
+      TodoDatabase db = new TodoDatabase("/todos.json");
+      Todo[] allTodos = db.listTodos(new HashMap<>());
 
     Todo[] incompleteStatus = db.filterTodosByStatus(allTodos, "incomplete");
     assertEquals(157, incompleteStatus.length, "Incorrect number of todos with completed status");
   }
 
   @Test
-  public void filterTodosByCategory() throws IOException {
-    TodoDatabase db = new TodoDatabase("/todos.json");
-    Todo[] allTodos = db.listTodos(new HashMap<>());
-
-    Todo[] groceries = db.filterTodosByCategory(allTodos, "groceries");
-    assertEquals(76, groceries.length, "Incorrect number of todos with groceries Category");
-  }
-
-  @Test
   public void filterTodosByOwner() throws IOException {
     TodoDatabase db = new TodoDatabase("/todos.json");
     Todo[] allTodos = db.listTodos(new HashMap<>());
-
-    Todo[] ownedByFry = db.filterTodosByOwner(allTodos, "Fry");
-    assertEquals(61, ownedByFry.length, "Incorrect number of todos with owner Fry");
 
     Todo[] ownedByWorkman = db.filterTodosByOwner(allTodos, "Workman");
     assertEquals(49, ownedByWorkman.length, "Incorrect number of todos with owner Workman");
@@ -90,8 +73,28 @@ public class FilterTodos {
     TodoDatabase db = new TodoDatabase("/todos.json");
     Map<String, List<String>> queryParams = new HashMap<>();
 
-    queryParams.put("category", Arrays.asList(new String[] {"homework"}));
-    Todo[] homeworkCategory = db.listTodos(queryParams);
-    assertEquals(79, homeworkCategory.length);
+
   }
+    @Test
+    public void filterCompletion() throws IOException {
+      TodoDatabase db = new TodoDatabase("/todos.json");
+      Map<String, List<String>> queryParams = new HashMap<>();
+
+
+      queryParams.put("status", Arrays.asList(new String[] {"complete"}));
+      Todo[] completed = db.listTodos(queryParams);
+      assertEquals(143, completed.length);
+    }
+
+    @Test
+    public void orderByAttribute() throws IOException {
+      TodoDatabase db = new TodoDatabase("/todos.json");
+      Map<String, List<String>> queryParams = new HashMap<>();
+
+/* Just checks that it actually returns everything like it is suppose to*/
+      queryParams.put("orderBy", Arrays.asList(new String[] {"owner"}));
+      Todo[] completed = db.listTodos(queryParams);
+      assertEquals(300, completed.length);
+    }
+
 }
