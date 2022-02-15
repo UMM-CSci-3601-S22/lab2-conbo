@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.http.BadRequestResponse;
 
@@ -17,6 +18,8 @@ import io.javalin.http.BadRequestResponse;
  * then provide various database-like methods that allow the `UserController` to
  * "query" the "database".
  */
+
+@SuppressWarnings({ "SimplifyBooleanExpression" })
 public class TodoDatabase {
 
   private Todo[] allTodos;
@@ -71,9 +74,24 @@ public class TodoDatabase {
       }
     }
 
+    if (queryParams.containsKey("status")) {
+      String complete = queryParams.get("status").get(0);
+      filteredTodos = filterTodosByStatus(filteredTodos, complete);
+    }
+
+    if (queryParams.containsKey("category")) {
+      String groceries = queryParams.get("category").get(0);
+      filteredTodos = filterTodosByCategory(filteredTodos, groceries);
+
+    }
+
+    if (queryParams.containsKey("orderBy")) {
+      String attribute = queryParams.get("orderBy").get(0);
+      filteredTodos = filterByAttribute(filteredTodos, attribute);
+    }
+
     return filteredTodos;
   }
-
 
   public Todo[] filterTodosByOwner(Todo[] todos, String targetOwner) {
     return Arrays.stream(todos).filter(x -> x.owner.equals(targetOwner)).toArray(Todo[]::new);
@@ -83,9 +101,74 @@ public class TodoDatabase {
     return Arrays.stream(todos).limit(limit).toArray(Todo[]::new);
   }
 
+  public Todo[] filterTodosByStatus(Todo[] todos, String completionParam) {
+    if (completionParam.equals("complete")) {
+      return Arrays.stream(todos).filter(x -> x.status).toArray(Todo[]::new);
+    } else if (completionParam.equals("incomplete")) {
+      return Arrays.stream(todos).filter(x -> !x.status).toArray(Todo[]::new);
+    } else {
+      return null;
+    }
+  }
+
   public Todo[] filterTodosByBody(Todo[] todos, String contains) {
     return Arrays.stream(todos).filter(x -> x.body.toLowerCase().contains(contains.toLowerCase())).toArray(Todo[]::new);
   }
 
+  public Todo[] filterTodosByCategory(Todo[] todos, String category) {
+    return Arrays.stream(todos).filter(x -> x.category.toLowerCase().equals(category.toLowerCase()))
+        .toArray(Todo[]::new);
+  }
 
+  public Todo[] filterByAttribute(Todo[] todos, String attribute) {
+
+    if (attribute.equals("owner")) {
+      for (int i = 1; i < todos.length; i++) {
+        Todo curr = todos[i];
+        int j = i - 1;
+        while (j >= 0 && todos[j].owner.compareTo(curr.owner) >= 0) {
+          todos[j + 1] = todos[j];
+          j = j - 1;
+        }
+        todos[j + 1] = curr;
+      }
+    }
+
+    if (attribute.equals("category")) {
+      for (int i = 1; i < todos.length; i++) {
+        Todo curr = todos[i];
+        int j = i - 1;
+        while (j >= 0 && todos[j].category.compareTo(curr.category) >= 0) {
+          todos[j + 1] = todos[j];
+          j = j - 1;
+        }
+        todos[j + 1] = curr;
+      }
+    }
+
+    if (attribute.equals("body")) {
+      for (int i = 1; i < todos.length; i++) {
+        Todo curr = todos[i];
+        int j = i - 1;
+        while (j >= 0 && todos[j].body.compareTo(curr.body) >= 0) {
+          todos[j + 1] = todos[j];
+          j = j - 1;
+        }
+        todos[j + 1] = curr;
+      }
+    }
+
+    if (attribute.equals("status")) {
+      for (int i = 1; i < todos.length; i++) {
+        Todo curr = todos[i];
+        int j = i - 1;
+        while (j >= 0 && todos[j].status == true) {
+          todos[j + 1] = todos[j];
+          j = j - 1;
+        }
+        todos[j + 1] = curr;
+      }
+    }
+    return todos;
+  }
 }
